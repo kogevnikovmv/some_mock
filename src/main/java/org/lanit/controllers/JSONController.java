@@ -1,16 +1,17 @@
-package controllers;
+package org.lanit.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import models.AddRequestJSON;
-import models.DeleteRequestJSON;
-import models.ErrorResponseJSON;
+import org.lanit.models.AddRequestJSON;
+import org.lanit.models.DeleteRequestJSON;
+import org.lanit.models.ErrorResponseJSON;
+import org.lanit.service.JsonService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.*;
-import service.JsonService;
+
 
 import java.io.IOException;
 
@@ -26,8 +27,8 @@ public class JSONController {
     @PostMapping("/json")
     public Object add(@RequestParam(value = "action") String action,
                           @RequestBody String json) throws IOException {
-
-        // если параметр пути = add
+        System.out.println("it work" + action);
+        // если параметр = add
         try {
             if (action.equals("add")) {
                 // json -> object
@@ -35,7 +36,7 @@ public class JSONController {
                 // возвращаем результат операции
                 return jsonService.add(addRequestBody);
             }
-            // если параметр пути = delete
+            // если параметр = delete
             else if (action.equals("delete")) {
                 // json -> object
                 DeleteRequestJSON deleteRequestBody = objectMapper.readValue(json, DeleteRequestJSON.class);

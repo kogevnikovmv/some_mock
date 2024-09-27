@@ -1,16 +1,22 @@
-package models;
+package org.lanit.models;
 
 import java.util.List;
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TickersItem{
-
+	@JsonProperty("ticker")
+	private String ticker;
 	@JsonProperty("alerts")
 	private List<AlertsItem> alerts;
 
-	@JsonProperty("ticker")
-	private String ticker;
 
+
+	public TickersItem () {}
+	public TickersItem(String ticker) {
+		this.ticker=ticker;
+	}
 	public TickersItem(String ticker, List<AlertsItem> alerts) {
 		this.ticker=ticker;
 		this.alerts=alerts;
@@ -30,5 +36,13 @@ public class TickersItem{
 
 	public String getTicker(){
 		return ticker;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		TickersItem that = (TickersItem) o;
+		return Objects.equals(ticker, that.ticker);
 	}
 }

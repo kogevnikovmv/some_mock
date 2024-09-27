@@ -1,8 +1,8 @@
-package service;
+package org.lanit.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import models.*;
+import org.lanit.models.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -31,14 +31,14 @@ public class JsonService {
         // получаем id пользователя со списком тикеров
         Info infoJson = addRequestBody.getInfo();
         // получаем список тикеров с алертами из запроса
-        HashMap<String, TickersItem> tickersJson = infoJson.getTickers();
+        List<TickersItem> tickersJson = infoJson.getTickers();
 
         // добавляемый алерт из запроса
-        var newAlert = new AlertsItem(addJson.getTimeFrame(), addJson.getPercent());
-
-        if (tickersJson.containsKey(addJson.getName())) {
+        AlertsItem newAlert = new AlertsItem(addJson.getTimeFrame(), addJson.getPercent());
+        TickersItem newTicker = new TickersItem(addJson.getName());
+        if (tickersJson.contains(newTicker)) {
             // если тикер найден
-            TickersItem ticker = tickersJson.get(addJson.getName());
+            TickersItem ticker = tickersJson.get(tickersJson.indexOf(newTicker));
             List<AlertsItem> alertsList = ticker.getAlerts();
             if (alertsList.contains(newAlert)) {
                 // если алерт со значением timeframe найден то он обновляется
@@ -54,13 +54,12 @@ public class JsonService {
             // обновляем список алертов в тикере
             ticker.setAlerts(alertsList);
             // обновляем тикер в списоке тикерове
-            tickersJson.replace(addJson.getName(), ticker);
+            tickersJson.remove(tickersJson.indexOf(newTicker));
+            tickersJson.add(newTicker);
+
         } else {
             //если тикер не найден -> создание нового тикера с алертом
-            tickersJson.put(
-                    addJson.getName(), new TickersItem(
-                            addJson.getName(), Arrays.asList(newAlert)
-                    )
+            tickersJson.add(new TickersItem(addJson.getName(), Arrays.asList(newAlert))
             );
         }
         //добавляем обновленный список тикеров в ноду info, юзерид уже есть
@@ -95,21 +94,27 @@ public class JsonService {
         // получаем id пользователя со списком тикеров
         Info infoJson = deleteRequestBody.getInfo();
         // получаем список тикеров с алертами из запроса
-        HashMap<String, TickersItem> tickersJson = infoJson.getTickers();
-
+        List<TickersItem> tickersJson = infoJson.getTickers();
+        TickersItem newTicker = new TickersItem(deleteJson.getTickerName());
+        System.out.println(newTicker.getTicker() + tickersJson.contains(newTicker));
         // добавляемый алерт из запроса// var newAlert = new AlertsItem(addJson.getTimeFrame(), addJson.getPercent());
-        if (tickersJson.containsKey(deleteJson.getTickerName())) {
+        if (tickersJson.contains(newTicker)) {
             // если тикер найден
-            TickersItem ticker = tickersJson.get(deleteJson.getTickerName());
+            TickersItem ticker = tickersJson.get(tickersJson.indexOf(newTicker));
             List<AlertsItem> alertsList = ticker.getAlerts();
             // если размер списка алертов больше или равен индексы из запроса на удаление то он удалится
             if ((alertsList.size() - 1) >= deleteJson.getAlertIndex()) {
                 // удаляем алерт по индексу из запроса
+                System.out.println(alertsList);
                 alertsList.remove(deleteJson.getAlertIndex());
+                System.out.println(alertsList);
                 // обновляем список алертов у тикера
-                ticker.setAlerts(alertsList);
+                newTicker.setAlerts(alertsList);
+                System.out.println(alertsList);
                 // обновляем список тикеров
-                tickersJson.replace(deleteJson.getTickerName(), ticker);
+                System.out.println(tickersJson.indexOf(newTicker));
+                tickersJson.remove(tickersJson.indexOf(newTicker));
+                tickersJson.add(newTicker);
             } else if ((alertsList.size() - 1) < deleteJson.getAlertIndex()) {
                 // если размер списка алертов меньше индекса из запроса то возвращаем сообщение об ошибке
                 return ResponseEntity
@@ -119,7 +124,7 @@ public class JsonService {
 
             }
             // если тикер с именем из запроса не найден то отправляем сообщение об ошибке
-        } else if (!tickersJson.containsKey(deleteJson.getTickerName())) {
+        } else if (!tickersJson.contains(newTicker)) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
                     .header("content-type", "application/json")

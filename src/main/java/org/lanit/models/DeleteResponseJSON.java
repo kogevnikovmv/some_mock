@@ -1,17 +1,15 @@
-package models;
+package org.lanit.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class DeleteResponseJSON {
-
+	@JsonProperty("info")
+	private Info info;
+	@JsonProperty("uuid")
+	private String uuid;
 	@JsonProperty("lastUpdate")
 	private String lastUpdate;
 
-	@JsonProperty("uuid")
-	private String uuid;
-
-	@JsonProperty("info")
-	private Info info;
 
 	public void setLastUpdate(String lastUpdate){
 		this.lastUpdate = lastUpdate;

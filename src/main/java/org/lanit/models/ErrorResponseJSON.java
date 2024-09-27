@@ -1,14 +1,13 @@
-package models;
+package org.lanit.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ErrorResponseJSON {
 
-	@JsonProperty("message")
-	private String message;
-
 	@JsonProperty("status")
 	private String status;
+	@JsonProperty("message")
+	private String message;
 
 	public ErrorResponseJSON(String status, String message) {
 		this.status=status;

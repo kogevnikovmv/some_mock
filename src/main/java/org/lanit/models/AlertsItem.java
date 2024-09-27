@@ -1,14 +1,16 @@
-package models;
+package org.lanit.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AlertsItem{
-
+	@JsonProperty("timeFrame")
+	private int timeFrame;
 	@JsonProperty("percent")
 	private int percent;
 
-	@JsonProperty("timeFrame")
-	private int timeFrame;
+
+
+	public AlertsItem() {}
 
 	public AlertsItem(int timeFrame, int percent) {
 		this.timeFrame=timeFrame;
