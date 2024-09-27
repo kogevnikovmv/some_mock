@@ -1,14 +1,19 @@
-package modelsJson;
+package models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class DeleteErrorResponseJSON{
+public class ErrorResponseJSON {
 
 	@JsonProperty("message")
 	private String message;
 
 	@JsonProperty("status")
 	private String status;
+
+	public ErrorResponseJSON(String status, String message) {
+		this.status=status;
+		this.message=message;
+	}
 
 	public void setMessage(String message){
 		this.message = message;

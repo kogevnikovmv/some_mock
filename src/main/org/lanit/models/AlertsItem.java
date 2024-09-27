@@ -1,4 +1,4 @@
-package modelsJson;
+package models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,6 +11,8 @@ public class AlertsItem{
 	private int timeFrame;
 
 	public AlertsItem(int timeFrame, int percent) {
+		this.timeFrame=timeFrame;
+		this.percent=percent;
 	}
 
 	public void setPercent(int percent){
@@ -27,5 +29,13 @@ public class AlertsItem{
 
 	public int getTimeFrame(){
 		return timeFrame;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		AlertsItem that = (AlertsItem) o;
+		return timeFrame == that.timeFrame;
 	}
 }

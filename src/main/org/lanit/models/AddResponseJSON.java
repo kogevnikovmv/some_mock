@@ -1,14 +1,11 @@
-package modelsJson;
+package models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class DeleteRequestJSON {
+public class AddResponseJSON {
 
 	@JsonProperty("lastUpdate")
 	private String lastUpdate;
-
-	@JsonProperty("delete")
-	private Delete delete;
 
 	@JsonProperty("uuid")
 	private String uuid;
@@ -22,14 +19,6 @@ public class DeleteRequestJSON {
 
 	public String getLastUpdate(){
 		return lastUpdate;
-	}
-
-	public void setDelete(Delete delete){
-		this.delete = delete;
-	}
-
-	public Delete getDelete(){
-		return delete;
 	}
 
 	public void setUuid(String uuid){

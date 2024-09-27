@@ -1,4 +1,4 @@
-package modelsJson;
+package models;
 
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,6 +12,8 @@ public class TickersItem{
 	private String ticker;
 
 	public TickersItem(String ticker, List<AlertsItem> alerts) {
+		this.ticker=ticker;
+		this.alerts=alerts;
 	}
 
 	public void setAlerts(List<AlertsItem> alerts){

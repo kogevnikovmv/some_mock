@@ -1,7 +1,7 @@
-package modelsJson;
+package models;
 
 import java.util.HashMap;
-import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Info{
