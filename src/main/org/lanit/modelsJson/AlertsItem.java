@@ -11,7 +11,6 @@ public class AlertsItem{
 	private int timeFrame;
 
 	public AlertsItem(int timeFrame, int percent) {
-
 	}
 
 	public void setPercent(int percent){

@@ -2,49 +2,49 @@ package modelsJson;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class AddRequestJSON{
+public class AddRequestJSON {
 
-	@JsonProperty("add")
-	private Add add;
+    @JsonProperty("add")
+    private Add add;
 
-	@JsonProperty("lastUpdate")
-	private String lastUpdate;
+    @JsonProperty("lastUpdate")
+    private String lastUpdate;
 
-	@JsonProperty("uuid")
-	private String uuid;
+    @JsonProperty("uuid")
+    private String uuid;
 
-	@JsonProperty("info")
-	private Info info;
+    @JsonProperty("info")
+    private Info info;
 
-	public void setAdd(Add add){
-		this.add = add;
-	}
+    public void setAdd(Add add){
+        this.add = add;
+    }
 
-	public Add getAdd(){
-		return add;
-	}
+    public Add getAdd(){
+        return add;
+    }
 
-	public void setLastUpdate(String lastUpdate){
-		this.lastUpdate = lastUpdate;
-	}
+    public void setLastUpdate(String lastUpdate){
+        this.lastUpdate = lastUpdate;
+    }
 
-	public String getLastUpdate(){
-		return lastUpdate;
-	}
+    public String getLastUpdate(){
+        return lastUpdate;
+    }
 
-	public void setUuid(String uuid){
-		this.uuid = uuid;
-	}
+    public void setUuid(String uuid){
+        this.uuid = uuid;
+    }
 
-	public String getUuid(){
-		return uuid;
-	}
+    public String getUuid(){
+        return uuid;
+    }
 
-	public void setInfo(Info info){
-		this.info = info;
-	}
+    public void setInfo(Info info){
+        this.info = info;
+    }
 
-	public Info getInfo(){
-		return info;
-	}
+    public Info getInfo(){
+        return info;
+    }
 }

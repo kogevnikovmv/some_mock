@@ -1,40 +1,35 @@
-package controllers;
+package service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.validation.Valid;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import modelsJson.*;
+import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
+public class JsonService {
 
-@Validated
-@RestController
-@RequestMapping("/")
-public class TickerController {
-    /*
-    замечаний нет
-    */
-    @PostMapping("/json")
-    public Object add(@RequestParam(value = "action") String action, @RequestBody AddRequestJSON addRequestBody) throws JsonProcessingException {
+    private static JsonService jsonService;
+    public static JsonService getUserService() {
+        if (jsonService == null) {
+            JsonService jsonService = new JsonService();
+        }
+        return jsonService;
+    }
+
+    public Object add (AddRequestJSON addRequestBody) throws JsonProcessingException {
+
         // объект с данными добавляемого алерта (имя тикера, параметры алерта)
         Add addJson = addRequestBody.getAdd();
         // получаем id пользователя со списком тикеров
         Info infoJson = addRequestBody.getInfo();
         // получаем список тикеров с алертами из запроса
-        HashMap<String,TickersItem> tickersJson = infoJson.getTickers();
+        HashMap<String, TickersItem> tickersJson = infoJson.getTickers();
 
         // добавляемый алерт из запроса
         var newAlert = new AlertsItem(addJson.getTimeFrame(), addJson.getPercent());
@@ -57,7 +52,7 @@ public class TickerController {
         } else {
             //если тикер не найден -> создание нового тикера с алертом
             tickersJson.put(
-                addJson.getName(), new TickersItem(
+                    addJson.getName(), new TickersItem(
                             addJson.getName(), Arrays.asList(newAlert)
                     )
             );
@@ -84,5 +79,11 @@ public class TickerController {
         //добавляем хэдер, статус код и тело ответа
         return ResponseEntity.ok().header("content-type","application/json").body(json);
         //return new ResponseEntity<>(responseBody, headers,HttpStatus.OK);
-    }
+    };
+
+    public Object delete (DeleteRequestJSON deleteRequestBody) {
+        return deleteRequestBody;
+    };
+
+
 }

@@ -2,7 +2,7 @@ package modelsJson;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class AddResponseJSON {
+public class DeleteResponseJSON {
 
 	@JsonProperty("lastUpdate")
 	private String lastUpdate;
