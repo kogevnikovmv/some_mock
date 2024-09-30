@@ -7,6 +7,7 @@ import org.lanit.models.ErrorResponseJSON;
 import org.lanit.service.JsonService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 
-@RestController
+@Controller
 @RequestMapping("/")
 public class JSONController {
 
@@ -27,7 +28,6 @@ public class JSONController {
     @PostMapping("/json")
     public Object add(@RequestParam(value = "action") String action,
                           @RequestBody String json) throws IOException {
-        System.out.println("it work" + action);
         // если параметр = add
         try {
             if (action.equals("add")) {

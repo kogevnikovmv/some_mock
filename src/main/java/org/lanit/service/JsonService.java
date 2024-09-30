@@ -40,6 +40,9 @@ public class JsonService {
             // если тикер найден
             TickersItem ticker = tickersJson.get(tickersJson.indexOf(newTicker));
             List<AlertsItem> alertsList = ticker.getAlerts();
+            /*добавляем алерт из запроса, даже если есть алерт с таким же таймФреймом
+            alertsList.add(newAlert);*/
+            /* если алерт с таймФреймом из запроса найден то он обновится */
             if (alertsList.contains(newAlert)) {
                 // если алерт со значением timeframe найден то он обновляется
                 for (AlertsItem alert : alertsList) {
@@ -54,8 +57,8 @@ public class JsonService {
             // обновляем список алертов в тикере
             ticker.setAlerts(alertsList);
             // обновляем тикер в списоке тикерове
-            tickersJson.remove(tickersJson.indexOf(newTicker));
-            tickersJson.add(newTicker);
+            tickersJson.remove(tickersJson.indexOf(ticker));
+            tickersJson.add(ticker);
 
         } else {
             //если тикер не найден -> создание нового тикера с алертом
@@ -96,7 +99,6 @@ public class JsonService {
         // получаем список тикеров с алертами из запроса
         List<TickersItem> tickersJson = infoJson.getTickers();
         TickersItem newTicker = new TickersItem(deleteJson.getTickerName());
-        System.out.println(newTicker.getTicker() + tickersJson.contains(newTicker));
         // добавляемый алерт из запроса// var newAlert = new AlertsItem(addJson.getTimeFrame(), addJson.getPercent());
         if (tickersJson.contains(newTicker)) {
             // если тикер найден
@@ -105,14 +107,10 @@ public class JsonService {
             // если размер списка алертов больше или равен индексы из запроса на удаление то он удалится
             if ((alertsList.size() - 1) >= deleteJson.getAlertIndex()) {
                 // удаляем алерт по индексу из запроса
-                System.out.println(alertsList);
                 alertsList.remove(deleteJson.getAlertIndex());
-                System.out.println(alertsList);
                 // обновляем список алертов у тикера
                 newTicker.setAlerts(alertsList);
-                System.out.println(alertsList);
                 // обновляем список тикеров
-                System.out.println(tickersJson.indexOf(newTicker));
                 tickersJson.remove(tickersJson.indexOf(newTicker));
                 tickersJson.add(newTicker);
             } else if ((alertsList.size() - 1) < deleteJson.getAlertIndex()) {
